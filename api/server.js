@@ -2,6 +2,8 @@ import express from "express";
 import dotenv from "dotenv";
 import morgan from "morgan";
 import cors from "cors";
+import UserRouter from "./src/routers/UserRouter.js";
+import { connectDB } from "./src/config/dbConfig.js";
 dotenv.config();
 
 const app = express();
@@ -14,12 +16,11 @@ app.use(express.json());
 app.use(morgan("dev"));
 app.use(cors());
 
-app.use("/api/v1/user", (req, res, next) => {
-  res.json({
-    status: "success",
-    message: "success",
-  });
-});
+//database
+
+connectDB();
+
+app.use("/api/v1/user", UserRouter);
 
 //uncaught error handler
 
