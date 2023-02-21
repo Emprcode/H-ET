@@ -1,8 +1,63 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
+import { toast } from "react-toastify";
+import { CustomInputFields } from "../components/customFields/CustomInputFields";
+import { registerUser } from "../components/helper/axiosHelper";
 import { MainLayout } from "../components/layout/MainLayout";
 
 const Registration = () => {
+  const [form, setForm] = useState({});
+
+  const handleOnChange = (e) => {
+    const { name, value } = e.target;
+
+    setForm({
+      ...form,
+      [name]: value,
+    });
+  };
+
+  const handeOnSubmit = async (e) => {
+    e.preventDefault();
+    const { confimPassword, ...rest } = form;
+    if (confimPassword !== rest.password) {
+      return window.alert("Password do not match");
+    }
+    const { status, message } = await registerUser(rest);
+    toast[status](message);
+    // console.log(form);
+  };
+
+  const inputFields = [
+    {
+      label: "User Name",
+      name: "name",
+      type: "text",
+      required: true,
+      placeholder: "john",
+    },
+    {
+      label: "Email",
+      name: "email",
+      type: "email",
+      required: true,
+      placeholder: "john@email.com",
+    },
+    {
+      label: "Password",
+      name: "password",
+      type: "password",
+      required: true,
+      placeholder: "*******",
+    },
+    {
+      label: "Confirm Password",
+      name: "password",
+      type: "Password",
+      required: true,
+      placeholder: "******",
+    },
+  ];
   return (
     <MainLayout>
       <Container>
@@ -14,24 +69,17 @@ const Registration = () => {
             </div>
           </Col>
           <Col>
-            <Form>
+            <Form onSubmit={handeOnSubmit}>
               <h2>Register</h2>
               <hr />
-              <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label>Email address</Form.Label>
-                <Form.Control type="email" placeholder="Enter email" />
-                <Form.Text className="text-muted">
-                  We'll never share your email with anyone else.
-                </Form.Text>
-              </Form.Group>
+              {inputFields.map((item, i) => (
+                <CustomInputFields
+                  key={i}
+                  {...item}
+                  onChange={handleOnChange}
+                />
+              ))}
 
-              <Form.Group className="mb-3" controlId="formBasicPassword">
-                <Form.Label>Password</Form.Label>
-                <Form.Control type="password" placeholder="Password" />
-              </Form.Group>
-              <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                <Form.Check type="checkbox" label="Check me out" />
-              </Form.Group>
               <Button variant="primary" type="submit">
                 Submit
               </Button>

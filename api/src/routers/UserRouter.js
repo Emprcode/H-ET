@@ -35,7 +35,7 @@ router.post("/login", async (req, res, next) => {
   try {
     console.log(req.body);
 
-    const result = await getSingleUserUser(req.body);
+    const result = await getSingleUser(req.body);
 
     result?._id
       ? res.json({

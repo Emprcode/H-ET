@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "./pages/Login";
 import Registration from "./pages/Registration";
 import DashBoard from "./pages/DashBoard";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Route path="/dashboard" element={<DashBoard />}></Route>
         </Routes>
       </BrowserRouter>
+      <ToastContainer />
     </div>
   );
 }
