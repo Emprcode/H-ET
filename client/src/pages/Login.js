@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -7,9 +7,10 @@ import { loginUser } from "../components/helper/axiosHelper";
 import { MainLayout } from "../components/layout/MainLayout";
 
 const Login = () => {
-  const emailRef = useRef("")
-  const passwordRef = useRef("")
+  // const emailRef = useRef("")
+  // const passwordRef = useRef("")
   const navigate = useNavigate()
+  const [form, setForm] = useState({});
 
   const inputFields = [
    
@@ -19,7 +20,7 @@ const Login = () => {
       type: "email",
       required: true,
       placeholder: "john@email.com",
-      forwardref: emailRef
+      // forwardref: emailRef
     },
     {
       label: "Password",
@@ -27,22 +28,32 @@ const Login = () => {
       type: "password",
       required: true,
       placeholder: "*******",
-      forwardref: passwordRef
+      // forwardref: passwordRef
     },
 
   ];
+
+
+  const handleOnChange = (e) => {
+    const { name, value } = e.target;
+
+    setForm({
+      ...form,
+      [name]: value,
+    });
+  };
   const handeOnSubmit = async (e) => {
     e.preventDefault();
    
-    const loginObj = {
-      email: emailRef.current.value,
-      password: passwordRef.current.value
-    }
-    const { status, message, result } = await loginUser(loginObj);
+    // const loginObj = {
+    //   email: emailRef.current.value,
+    //   password: passwordRef.current.value
+    // }
+    const { status, message, result } = await loginUser(form);
     toast[status](message);
     
     status === "success" && result?._id && navigate("/dashboard")
-    console.log(loginObj)
+    console.log(form)
   };
 
   return (
@@ -63,7 +74,7 @@ const Login = () => {
                 <CustomInputFields
                   key={i}
                   {...item}
-               
+               onChange={handleOnChange}
                 />
               ))}
 
