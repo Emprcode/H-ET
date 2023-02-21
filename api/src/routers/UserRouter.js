@@ -36,11 +36,12 @@ router.post("/login", async (req, res, next) => {
     console.log(req.body);
 
     const result = await getSingleUser(req.body);
-
+console.log(result)
     result?._id
       ? res.json({
           status: "success",
           message: "Login Successful",
+          result
         })
       : res.json({
           status: "error",

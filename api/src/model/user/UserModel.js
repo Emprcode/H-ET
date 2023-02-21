@@ -7,5 +7,5 @@ export const createUser = (userObj)=> {
 
 // login
 export const getSingleUser = (filter)=> {
-    return UserSchema.findOne(filter)
+    return UserSchema.find(filter)
 }
