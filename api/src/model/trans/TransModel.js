@@ -6,6 +6,12 @@ export const crateTransaction = (userObj)=> {
 }
 
 // login
-export const getTransById = (filter)=> {
-    return TransSchema.findOne(filter)
+export const getTransById = (userId)=> {
+    return TransSchema.find({userId})
+}
+
+//delete
+
+export const deleteTransaction = (_id) => {
+    return TransSchema.findByIdAndDelete(_id)
 }

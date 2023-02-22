@@ -3,7 +3,7 @@ import { crateTransaction } from "../model/trans/TransModel.js";
 
 const router = express.Router();
 
-// register
+// add
 
 router.post("/", async (req, res, next) => {
   try {
@@ -24,23 +24,18 @@ router.post("/", async (req, res, next) => {
   next(error);
 });
 
-//login
-router.post("/login", async (req, res, next) => {
+//get
+router.get("/login", async (req, res, next) => {
   try {
     console.log(req.body);
 
     const result = await getTransById();
     console.log(result);
-    result?._id
-      ? res.json({
-          status: "success",
-          message: "Transaction fetched",
-          result,
-        })
-      : res.json({
-          status: "error",
-          message: "Unable to get transaction, Please try again later",
-        });
+    res.json({
+      status: "success",
+      message: "Transaction fetched",
+      result,
+    });
   } catch (error) {
     next(error);
   }
