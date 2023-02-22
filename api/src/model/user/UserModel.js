@@ -1,4 +1,4 @@
-import UserSchema from "./UserSchema.js"
+import UserSchema from "../user/UserSchema.js"
 
 //register
 export const createUser = (userObj)=> {
@@ -7,5 +7,5 @@ export const createUser = (userObj)=> {
 
 // login
 export const getSingleUser = (filter)=> {
-    return UserSchema.find(filter)
+    return UserSchema.findOne(filter)
 }
