@@ -14,10 +14,10 @@ export const Header = () => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto ">
             <Link to="/" className="nav-link">
-              <i class="fa-solid fa-right-to-bracket text-light"></i>
+              <i className="fa-solid fa-right-to-bracket text-light"></i>
             </Link>
             <Link to="/register" className="nav-link">
-              <i class="fa-solid fa-user-pen text-light"></i>
+              <i className="fa-solid fa-user-pen text-light"></i>
             </Link>
           </Nav>
         </Navbar.Collapse>

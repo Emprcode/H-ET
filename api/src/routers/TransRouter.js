@@ -20,12 +20,13 @@ router.post("/", async (req, res, next) => {
           status: "error",
           message: "Unable to add transaction, Please try again later",
         });
-  } catch (error) {}
-  next(error);
+  } catch (error) {
+    next(error);
+  }
 });
 
 //get
-router.get("/login", async (req, res, next) => {
+router.get("/", async (req, res, next) => {
   try {
     console.log(req.body);
 
