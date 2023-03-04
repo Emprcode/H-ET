@@ -1,26 +1,38 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
-import { CustomTable } from "../components/customFields/CustomTable";
-import { addTrans } from "../components/helper/axiosHelper";
+import { addTrans, getTrans } from "../components/helper/axiosHelper";
 import { MainLayout } from "../components/layout/MainLayout";
 import { toast } from "react-toastify";
+import { CustomTable } from "../components/customFields/CustomTable";
 
 const DashBoard = () => {
-  const [trans, setTrans] = useState([]);
+  const [formData, setformData] = useState({});
+  const [trans, setTrans] = useState([])
+  useEffect(() => {
+    fetchTrans()
+  }, [])
 
   const handleOnChange = (e) => {
     const { name, value } = e.target;
-    setTrans({
-      ...trans,
+    setformData({
+      ...formData,
       [name]: value,
     });
   };
 
   const handleOnAdd = async (e) => {
     e.preventDefault();
-    const { status, message } = await addTrans(trans);
+    const { status, message } = await addTrans(formData);
     toast[status](message);
   };
+
+  const fetchTrans = async () => {
+const {status, result } = await getTrans()
+console.log(status, result)
+status === "success"  && setTrans(result)
+  }
+
+  
   return (
     <MainLayout>
       {/* form */}
@@ -33,12 +45,15 @@ const DashBoard = () => {
                 placeholder="Name"
                 onChange={handleOnChange}
                 name="name"
+                required
               />
             </Col>
             <Col>
               <Form.Control
                 placeholder="Type"
                 name="type"
+                required
+
                 onChange={handleOnChange}
               />
             </Col>
@@ -46,6 +61,7 @@ const DashBoard = () => {
               <Form.Control
                 placeholder="Amount"
                 name="amount"
+                required
                 onChange={handleOnChange}
               />
             </Col>
@@ -60,7 +76,7 @@ const DashBoard = () => {
 
       {/* table */}
       <Container className="table mt-5">
-        {/* <CustomTable trans={trans} /> */}
+        <CustomTable trans={trans} />
       </Container>
     </MainLayout>
   );

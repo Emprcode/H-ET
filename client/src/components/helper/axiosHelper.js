@@ -29,20 +29,59 @@ export const loginUser = async (userObj) => {
   }
 };
 
+// transaction
 
-// trans
+//check if user exist
 
-
-export const addTrans = async(obj) => {
-  try {
-    const {data} = await axios.post(transUrl, obj)
-    console.log(data)
-    return data
-  } catch (error) {
-    return{
-      status:"error",
-      message:error.message
-    }
-    
-  }
+const getUserId = () => {
+  const userStr = sessionStorage.getItem("user")
+  const userObj = userStr? JSON.parse(userStr) : null
+  console.log(userObj)
+  return userObj?._id || null
 }
+
+export const addTrans = async (obj) => {
+  try {
+    const userId = getUserId()
+    console.log(userId)
+    if (! userId) {
+      return{
+        status:"error",
+        message:"you need to login first"
+      }
+    }
+     
+  
+   
+    const { data } = await axios.post(transUrl, obj, {headers:{Authorization: userId}});
+    console.log(data);
+    return data; 
+  } catch (error) {
+    return {
+      status: "error",
+      message: error.message,
+    };
+  }
+};
+export const getTrans = async () => {
+  try {
+
+    const userId = getUserId()
+    if (! userId ) {
+      return{
+        status:"error",
+        message:"you need to login first"
+      }
+    }
+   
+    const { data } = await axios.get(transUrl, {headers:{
+      Authorization: userId
+    }});
+    return data;
+  } catch (error) {
+    return {
+      status: "error",
+      message: error.message,
+    };
+  }
+};

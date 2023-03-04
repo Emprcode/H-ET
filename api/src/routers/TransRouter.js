@@ -1,5 +1,5 @@
 import express from "express";
-import { crateTransaction } from "../model/trans/TransModel.js";
+import { createTransaction, getTransById } from "../model/trans/TransModel.js";
 
 const router = express.Router();
 
@@ -7,9 +7,11 @@ const router = express.Router();
 
 router.post("/", async (req, res, next) => {
   try {
-    console.log(req.body);
-
-    const result = await crateTransaction(req.body);
+    const { authorization } = req.headers;
+    const result = await createTransaction({
+      ...req.body,
+      userId: authorization,
+    });
 
     result?._id
       ? res.json({
@@ -28,9 +30,9 @@ router.post("/", async (req, res, next) => {
 //get
 router.get("/", async (req, res, next) => {
   try {
-    console.log(req.body);
+    const { authorization } = req.headers;
 
-    const result = await getTransById();
+    const result = await getTransById({ userId: authorization });
     console.log(result);
     res.json({
       status: "success",

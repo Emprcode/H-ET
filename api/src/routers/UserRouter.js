@@ -41,7 +41,11 @@ console.log(result)
       ? res.json({
           status: "success",
           message: "Login Successful",
-          result
+          result:{
+            _id: result._id,
+            name:result.name,
+            email:result.email
+          }
         })
       : res.json({
           status: "error",

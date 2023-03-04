@@ -15,6 +15,7 @@ const Registration = () => {
       ...form,
       [name]: value,
     });
+    console.log(name, value)
   };
 
   const handeOnSubmit = async (e) => {
@@ -52,7 +53,7 @@ const Registration = () => {
     },
     {
       label: "Confirm Password",
-      name: "password",
+      name: "confimPassword",
       type: "Password",
       required: true,
       placeholder: "******",

@@ -51,8 +51,10 @@ const Login = () => {
     // }
     const { status, message, result } = await loginUser(form);
     toast[status](message);
-    
-    status === "success" && result?._id && navigate("/dashboard")
+    if ( status === "success" && result?._id) {
+      sessionStorage.setItem("user", JSON.stringify(result))
+      navigate("/dashboard")
+    }
     console.log(form)
   };
 
